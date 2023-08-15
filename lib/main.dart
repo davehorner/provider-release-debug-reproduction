@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tmp/settings_page.dart';
 
+import 'color_schemes.g.dart';
 import 'theme_provider.dart';
 
 void main() {
@@ -14,8 +15,21 @@ void main() {
       ),
     ],
     child: Consumer<ThemeProvider>(builder: (_, model, __) {
-      return MyApp();
-      //themeMode: model.mode,
+      return MaterialApp(
+        theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+        /* ThemeMode.system to follow system theme,
+         ThemeMode.light for light theme,
+         ThemeMode.dark for dark theme */
+        themeMode: model.mode,
+        // theme: ThemeData(),
+        // darkTheme: ThemeData.dark(),
+        initialRoute: MyHomePage.routeName,
+        routes: <String, WidgetBuilder>{
+          MyHomePage.routeName: (_) =>
+              const MyHomePage(title: 'Flutter Demo Home Page'),
+        },
+      );
     }),
   ));
 }
@@ -54,6 +68,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+  static const String routeName = '/';
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
